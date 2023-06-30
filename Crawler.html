@@ -26,67 +26,67 @@
     <div id="cardContainer"></div>
 
     <script>
-    // Fetch the JSON data from a file
-    fetch('data.json')
-      .then(response => response.json())
-      .then(data => {
-        // Get the card container element
-        const cardContainer = document.getElementById('cardContainer');
+        // Fetch the JSON data from a file
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                // Get the card container element
+                const cardContainer = document.getElementById('cardContainer');
 
-        // Store the original data for reference
-        const originalData = data;
+                // Store the original data for reference
+                const originalData = data;
 
-        // Display the initial cards
-        displayCards(data);
+                // Display the initial cards
+                displayCards(data);
 
-        // Function to filter the cards based on the search input
-        function filterCards(searchValue) {
-          const filteredData = originalData.filter(card =>
-            card.placeName.toLowerCase().includes(searchValue.toLowerCase())
-          );
-          displayCards(filteredData);
-        }
+                // Function to filter the cards based on the search input
+                function filterCards(searchValue) {
+                    const filteredData = originalData.filter(card =>
+                        card.placeName.toLowerCase().includes(searchValue.toLowerCase())
+                    );
+                    displayCards(filteredData);
+                }
 
-        // Function to display the cards
-        function displayCards(cards) {
-          // Clear the card container
-          cardContainer.innerHTML = '';
+                // Function to display the cards
+                function displayCards(cards) {
+                    // Clear the card container
+                    cardContainer.innerHTML = '';
 
-          // Iterate over each card
-          cards.forEach(card => {
-            // Create a new card element
-            const cardElement = document.createElement('div');
-            cardElement.classList.add('card');
+                    // Iterate over each card
+                    cards.forEach(card => {
+                        // Create a new card element
+                        const cardElement = document.createElement('div');
+                        cardElement.classList.add('card');
 
-            // Populate the card with data
-            const cardName = card.card_Name;
-            const cardUrl = card.card_Online_Url;
-            const placeName = card.placeName;
-            const discount = card.discount;
-            const isHtml = card.isHtml;
-            const details = card.details;
+                        // Populate the card with data
+                        const cardName = card.card_Name;
+                        const cardUrl = card.card_Online_Url;
+                        const placeName = card.placeName;
+                        const discount = card.discount;
+                        const isHtml = card.isHtml;
+                        const details = card.details;
 
-            cardElement.innerHTML = `
-              <h2>${placeName}</h2>
-              <p>Card: ${cardName}</p>
-              <p>Discount: ${discount}%</p>
-              <p>Details: ${details}</p>
-            `;
+                        cardElement.innerHTML = `
+                   <h2><a href="${cardUrl}">${placeName}</a></h2>
+                  <p>Card: ${cardName}</p>
+                  <p>Discount: ${discount}%</p>
+                  <p>Details: ${details}</p>
+                `;
 
-            // Append the card to the container
-            cardContainer.appendChild(cardElement);
-          });
-        }
+                        // Append the card to the container
+                        cardContainer.appendChild(cardElement);
+                    });
+                }
 
-        // Get the search input element
-        const searchInput = document.getElementById('searchInput');
+                // Get the search input element
+                const searchInput = document.getElementById('searchInput');
 
-        // Add event listener for search input
-        searchInput.addEventListener('input', function () {
-          filterCards(this.value);
-        });
-      })
-      .catch(error => console.log(error));
+                // Add event listener for search input
+                searchInput.addEventListener('input', function () {
+                    filterCards(this.value);
+                });
+            })
+            .catch(error => console.log(error));
     </script>
 </body>
 </html>
