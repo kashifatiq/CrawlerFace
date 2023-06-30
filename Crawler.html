@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Card Layout</title>
@@ -25,53 +25,39 @@
     <div id="cardContainer"></div>
 
     <script>
-        // JSON data stored as a variable
-        const jsonData = [
-            {
-                "card_Name": "kas 2",
-                "card_Online_Url": "",
-                "placeName": "",
-                "discount": 15,
-                "isHtml": false,
-                "details": ""
-            },
-            {
-                "card_Name": "kas 3",
-                "card_Online_Url": "",
-                "placeName": "",
-                "discount": 25,
-                "isHtml": false,
-                "details": ""
-            }
-        ];
-
+    // Fetch the JSON data from a file
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
         // Get the card container element
         const cardContainer = document.getElementById('cardContainer');
 
         // Iterate over each object in the JSON array
-        jsonData.forEach(card => {
-            // Create a new card element
-            const cardElement = document.createElement('div');
-            cardElement.classList.add('card');
+        data.forEach(card => {
+          // Create a new card element
+          const cardElement = document.createElement('div');
+          cardElement.classList.add('card');
 
-            // Populate the card with data
-            const cardName = card.card_Name;
-            const cardUrl = card.card_Online_Url;
-            const placeName = card.placeName;
-            const discount = card.discount;
-            const isHtml = card.isHtml;
-            const details = card.details;
+          // Populate the card with data
+          const cardName = card.card_Name;
+          const cardUrl = card.card_Online_Url;
+          const placeName = card.placeName;
+          const discount = card.discount;
+          const isHtml = card.isHtml;
+          const details = card.details;
 
-            cardElement.innerHTML = `
+          cardElement.innerHTML = `
             <h2>${cardName}</h2>
             <p>Place: ${placeName}</p>
             <p>Discount: ${discount}%</p>
             <p>Details: ${details}</p>
           `;
 
-            // Append the card to the container
-            cardContainer.appendChild(cardElement);
+          // Append the card to the container
+          cardContainer.appendChild(cardElement);
         });
+      })
+      .catch(error => console.log(error));
     </script>
 </body>
 </html>
