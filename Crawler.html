@@ -22,6 +22,7 @@
     </style>
 </head>
 <body>
+    <input type="text" id="searchInput" placeholder="Search by place name">
     <div id="cardContainer"></div>
 
     <script>
@@ -32,29 +33,57 @@
         // Get the card container element
         const cardContainer = document.getElementById('cardContainer');
 
-        // Iterate over each object in the JSON array
-        data.forEach(card => {
-          // Create a new card element
-          const cardElement = document.createElement('div');
-          cardElement.classList.add('card');
+        // Store the original data for reference
+        const originalData = data;
 
-          // Populate the card with data
-          const cardName = card.card_Name;
-          const cardUrl = card.card_Online_Url;
-          const placeName = card.placeName;
-          const discount = card.discount;
-          const isHtml = card.isHtml;
-          const details = card.details;
+        // Display the initial cards
+        displayCards(data);
 
-          cardElement.innerHTML = `
-            <h2>${placeName}</h2>
-            <p>Card: ${cardName}</p>
-            <p>Discount: ${discount}%</p>
-            <p>Details: ${details}</p>
-          `;
+        // Function to filter the cards based on the search input
+        function filterCards(searchValue) {
+          const filteredData = originalData.filter(card =>
+            card.placeName.toLowerCase().includes(searchValue.toLowerCase())
+          );
+          displayCards(filteredData);
+        }
 
-          // Append the card to the container
-          cardContainer.appendChild(cardElement);
+        // Function to display the cards
+        function displayCards(cards) {
+          // Clear the card container
+          cardContainer.innerHTML = '';
+
+          // Iterate over each card
+          cards.forEach(card => {
+            // Create a new card element
+            const cardElement = document.createElement('div');
+            cardElement.classList.add('card');
+
+            // Populate the card with data
+            const cardName = card.card_Name;
+            const cardUrl = card.card_Online_Url;
+            const placeName = card.placeName;
+            const discount = card.discount;
+            const isHtml = card.isHtml;
+            const details = card.details;
+
+            cardElement.innerHTML = `
+              <h2>${placeName}</h2>
+              <p>Card: ${cardName}</p>
+              <p>Discount: ${discount}%</p>
+              <p>Details: ${details}</p>
+            `;
+
+            // Append the card to the container
+            cardContainer.appendChild(cardElement);
+          });
+        }
+
+        // Get the search input element
+        const searchInput = document.getElementById('searchInput');
+
+        // Add event listener for search input
+        searchInput.addEventListener('input', function () {
+          filterCards(this.value);
         });
       })
       .catch(error => console.log(error));
